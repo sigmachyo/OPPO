@@ -20,6 +20,9 @@ static string getFileDate(string s);
 static int getFileSize(string s);
 
 int main() {
+
+    int x = 0;
+
     ifstream ist("file.txt");
 
     vector<FileInfo> files;
