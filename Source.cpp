@@ -33,8 +33,14 @@ int main() {
     string s;
 
     while (getline(ist, s)) {
-        files.push_back({ getFileName(s), getFileDate(s), getFileSize(s) });
-    }
+    // Используем другой подход для сортировки с перегрузкой less:
+    struct {
+        bool operator()(const FileInfo& a, const FileInfo& b) const {
+            return (a.date < b.date) || (a.date == b.date && a.size < b.size);
+        }
+    } customSort;
+
+    stable_sort(files.begin(), files.end(), customSort);
 
 
     sort(files.begin(), files.end(), [](const FileInfo& a, const FileInfo& b) {
@@ -60,13 +66,13 @@ int main() {
 }
 
 
-string getFileName(string s) {
-    auto name = extractData(s, R"("[a-zA-Z0-9._-]+")");
-    if (name.empty()) {
-        throw runtime_error("File name not found in the input line.");
+    string getFileName(string s) {
+        auto name = extractData(s, R"("[a-zA-Z0-9._-]+")");
+        if (name.empty()) {
+            throw runtime_error("File name not found in the input line.");
+        }
+        return name.at(0);
     }
-    return name.at(0);
-}
 
 string getFileDate(string s) {
     auto date = extractData(s, R"(\d{2}.\d{2}.\d{4})");
@@ -83,6 +89,9 @@ int getFileSize(string s) {
         throw runtime_error("File size not found in the input line.");
     }
 
+    int xxxxx = 9213;
+    int xzs = 0;
+    int x = 0;
     return stoi(size.back());
 }
 
