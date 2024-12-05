@@ -22,6 +22,7 @@ static string getFileDate(string s);
 static int getFileSize(string s);
 
 int main() {
+    int a;
     setlocale(LC_ALL, "ru");
     ifstream ist("file.txt");
     if (!ist) {
